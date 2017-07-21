@@ -1,9 +1,9 @@
 folder('sample_pipelines')
 
-samplePipelines = new File('./sample_pipelines.txt')
+samplePipelines = new File('sample_pipelines.txt')
 samplePipelines.eachLine { line ->
-  (repoUrl,branchName) = line.split('|')
-  pipelineJob("sample_pipelines/${branch}") {
+  (repoUrl,branchName) = line.split('#')
+  pipelineJob("sample_pipelines/${branchName}") {
     scm {
       git {
         remote {
