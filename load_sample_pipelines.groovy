@@ -3,16 +3,21 @@ folder('sample_pipelines')
 samplePipelines = readFileFromWorkspace('sample_pipelines.txt')
 samplePipelines.eachLine { line ->
   (repoUrl,branchName) = line.split('#')
-  repoName = repoUrl.split('/')[3].split('.')[0]
+  repoName = repoUrl.split('/')[4].split('\\.')[0]
+  println(repoName)
   pipelineJob("sample_pipelines/${repoName}") {
-    scm {
-      git {
-        remote {
-          url(repoUrl)
+    definition {
+      cpsScm {
+        scm {
+          git{
+            remote {
+              url(repoUrl)
+            }
+            branch(branchName)
+          }
         }
-        branch(branchName)
+        scriptPath('Jenkinsfile')
       }
     }
   }
 }
-
